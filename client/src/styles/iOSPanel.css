@@ -1,0 +1,85 @@
+.ios-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    transition: background var(--transition-normal);
+}
+
+.ios-panel-overlay.visible {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.ios-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+}
+
+.ios-panel.visible {
+    transform: translateY(0);
+}
+
+.ios-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border);
+    min-height: 56px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+}
+
+.ios-back-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    font-size: 17px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    transition: opacity var(--transition-fast);
+}
+
+.ios-back-button:active {
+    opacity: 0.6;
+}
+
+.ios-back-icon {
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.ios-panel-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.ios-header-spacer {
+    width: 60px;
+}
+
+.ios-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    -webkit-overflow-scrolling: touch;
+}
