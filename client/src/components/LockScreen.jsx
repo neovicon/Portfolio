@@ -99,7 +99,7 @@ const LockScreen = () => {
                     </button>
 
                     <div className="lock-hint">
-                        💡 Tip: Any code unlocks as guest, admin code for editing
+                        💡 Tip: Any code unlocks
                     </div>
                 </form>
             </div>

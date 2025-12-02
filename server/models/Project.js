@@ -8,8 +8,9 @@ const projectSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, 'Project description is required'],
-        trim: true
+        required: false,
+        trim: true,
+        default: ''
     },
     image: {
         type: String,

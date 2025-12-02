@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import useDeviceDetect from './hooks/useDeviceDetect';
 import useTheme from './hooks/useTheme';
+import { getAbout, getWallpaper } from './services/api';
 import LockScreen from './components/LockScreen';
 import Wallpaper from './components/ui/Wallpaper';
 import AdminPanel from './components/admin/AdminPanel';
@@ -28,6 +29,30 @@ function App() {
     description: 'Passionate developer with expertise in building modern web applications using the MERN stack. I love creating beautiful, performant, and user-friendly interfaces that deliver exceptional experiences.',
     avatar: '👨‍💻'
   });
+
+  // Fetch data from database on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [aboutResponse, wallpaperResponse] = await Promise.all([
+          getAbout(),
+          getWallpaper()
+        ]);
+
+        if (aboutResponse) {
+          setAboutData(aboutResponse);
+        }
+
+        if (wallpaperResponse) {
+          setWallpaper(wallpaperResponse.wallpaperId);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Show lock screen if locked
   if (isLocked) {
