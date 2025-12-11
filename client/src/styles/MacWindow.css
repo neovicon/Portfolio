@@ -1,0 +1,110 @@
+.window-overlay {
+    position: fixed;
+    top: 30px;
+    /* Offset for MenuBar */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+    transition: background var(--transition-normal);
+    pointer-events: none;
+}
+
+.window-overlay.visible {
+    background: rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+}
+
+.mac-window {
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: all var(--transition-normal);
+}
+
+.mac-window.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.mac-window.maximized {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    transform: none;
+}
+
+.window-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border);
+    min-height: 52px;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.window-control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: filter var(--transition-fast);
+}
+
+.window-control:hover {
+    filter: brightness(0.9);
+}
+
+.window-control.close {
+    background: #ff5f57;
+}
+
+.window-control.minimize {
+    background: #ffbd2e;
+}
+
+.window-control.maximize {
+    background: #28ca42;
+}
+
+.window-controls-spacer {
+    width: 60px;
+}
+
+.window-title {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.window-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    background: var(--bg-secondary);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.mac-window.maximized .window-content {
+    border-radius: 0;
+}

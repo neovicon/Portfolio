@@ -1,0 +1,140 @@
+.admin-panel {
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 2000;
+}
+
+.admin-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 16px var(--shadow);
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.admin-badge {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.admin-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.admin-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.admin-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.admin-btn:active {
+    transform: translateY(0);
+}
+
+.logout-btn {
+    background: rgba(255, 95, 87, 0.1);
+    border-color: rgba(255, 95, 87, 0.3);
+}
+
+.logout-btn:hover {
+    background: #ff5f57;
+    border-color: #ff5f57;
+}
+
+/* Guest Settings Button */
+.guest-settings-btn {
+    position: fixed;
+    bottom: 80px;
+    right: var(--spacing-md);
+    z-index: 2000;
+}
+
+.settings-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--shadow);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.settings-fab:active {
+    transform: scale(0.95);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .admin-panel {
+        top: auto;
+        bottom: 80px;
+        right: var(--spacing-md);
+    }
+
+    .admin-toolbar {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .admin-badge {
+        font-size: 11px;
+    }
+
+    .admin-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .guest-settings-btn {
+        bottom: 100px;
+    }
+
+    .settings-fab {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}
