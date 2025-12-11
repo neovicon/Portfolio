@@ -13,7 +13,7 @@ git commit -m "Sync updates"
 #  FRONT-END: copy ONLY the CONTENT OF client/
 #############################################
 
-git checkout front-end
+git checkout frontend
 git restore --source=main client/
 
 # Move everything *inside* client/ into root
@@ -30,7 +30,7 @@ git commit -m "Sync frontend (client content from main)"
 #  BACK-END: copy ONLY the CONTENT OF server/
 #############################################
 
-git checkout back-end
+git checkout backend
 git restore --source=main server/
 
 # Move everything *inside* server/ into root
