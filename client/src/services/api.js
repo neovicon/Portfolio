@@ -84,4 +84,42 @@ export const deleteSkillCategory = async (id) => {
     return response.data;
 };
 
+// Folder API calls
+export const getFolders = async () => {
+    const response = await api.get('/folders');
+    return response.data;
+};
+
+export const createFolder = async (folderData) => {
+    const response = await api.post('/folders', folderData);
+    return response.data;
+};
+
+export const addFileToFolder = async (folderId, fileData) => {
+    const response = await api.post(`/folders/${folderId}/files`, fileData);
+    return response.data;
+};
+
+export const deleteFolder = async (id) => {
+    const response = await api.delete(`/folders/${id}`);
+    return response.data;
+};
+
+export const deleteFile = async (folderId, fileId) => {
+    const response = await api.delete(`/folders/${folderId}/files/${fileId}`);
+    return response.data;
+};
+
+// Upload API calls
+export const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await api.post('/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return response.data;
+};
+
 export default api;

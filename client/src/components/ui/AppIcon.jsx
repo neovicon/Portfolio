@@ -1,8 +1,11 @@
 import { AboutIcon, ProjectsIcon, SkillsIcon, ContactIcon, SettingsIcon, FolderIcon } from './icons';
 import '../../styles/AppIcon.css';
 
-const AppIcon = ({ type, size = 60, onClick, label }) => {
+const AppIcon = ({ type, size = 60, onClick, label, ...props }) => {
     const getIcon = () => {
+        if (props.icon) {
+            return <div style={{ fontSize: `${size * 0.6}px` }}>{props.icon}</div>;
+        }
         switch (type) {
             case 'about':
                 return <AboutIcon size={size} />;

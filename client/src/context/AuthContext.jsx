@@ -11,7 +11,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isLocked, setIsLocked] = useState(true);
+    const [isLocked, setIsLocked] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [adminPasscode] = useState('1234'); // Default admin passcode
 

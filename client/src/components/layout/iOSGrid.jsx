@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import AppIcon from '../ui/AppIcon';
 import '../../styles/iOSGrid.css';
 
 const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
+    const [page, setPage] = useState(0);
+
     const getCurrentTime = () => {
         const now = new Date();
         return now.toLocaleTimeString('en-US', {
@@ -10,6 +13,14 @@ const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
             hour12: false
         });
     };
+
+    // Split apps into pages
+    // Page 0: Default apps (about, projects, skills, contact) + Theme
+    // Page 1: Custom apps + Admin Plus
+
+    const defaultAppIds = ['about', 'projects', 'skills', 'contact'];
+    const defaultApps = apps.filter(app => defaultAppIds.includes(app.id));
+    const customApps = apps.filter(app => !defaultAppIds.includes(app.id));
 
     return (
         <div className="ios-container">
@@ -31,22 +42,91 @@ const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
             </div>
 
             {/* App Grid */}
-            <div className="ios-grid">
-                {apps.map(app => (
+            <div className="ios-grid" style={{
+                display: 'flex',
+                overflowX: 'auto',
+                scrollSnapType: 'x mandatory',
+                width: '100%',
+                height: '100%',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                padding: '20px 0'
+            }}>
+                {/* Page 0 */}
+                <div style={{
+                    minWidth: '100%',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gridAutoRows: 'min-content',
+                    gap: '20px',
+                    padding: '0 20px',
+                    scrollSnapAlign: 'start'
+                }}>
+                    {defaultApps.map(app => (
+                        <AppIcon
+                            key={app.id}
+                            type={app.id}
+                            label={app.name}
+                            onClick={() => onAppClick(app.id)}
+                            icon={app.icon}
+                        />
+                    ))}
                     <AppIcon
-                        key={app.id}
-                        type={app.id}
-                        label={app.name}
-                        onClick={() => onAppClick(app.id)}
+                        type="settings"
+                        label="Theme"
+                        onClick={toggleTheme}
                     />
-                ))}
+                </div>
 
-                {/* Theme toggle as an app */}
-                <AppIcon
-                    type="settings"
-                    label="Theme"
-                    onClick={toggleTheme}
-                />
+                {/* Page 1 (if there are custom apps) */}
+                {(customApps.length > 0) && (
+                    <div style={{
+                        minWidth: '100%',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(4, 1fr)',
+                        gridAutoRows: 'min-content',
+                        gap: '20px',
+                        padding: '0 20px',
+                        scrollSnapAlign: 'start'
+                    }}>
+                        {customApps.map(app => (
+                            <AppIcon
+                                key={app.id}
+                                type={app.id}
+                                label={app.name}
+                                onClick={() => onAppClick(app.id)}
+                                icon={app.icon}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* Pagination Dots */}
+            <div className="ios-pagination" style={{
+                position: 'absolute',
+                bottom: '40px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                gap: '8px'
+            }}>
+                <div style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: 'white',
+                    opacity: 1
+                }} />
+                {customApps.length > 0 && (
+                    <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        background: 'white',
+                        opacity: 0.5
+                    }} />
+                )}
             </div>
 
             {/* iOS Home Indicator */}

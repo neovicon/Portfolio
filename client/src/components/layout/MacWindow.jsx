@@ -3,6 +3,7 @@ import '../../styles/MacWindow.css';
 
 const MacWindow = ({ app, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [isMaximized, setIsMaximized] = useState(false);
 
     useEffect(() => {
         // Trigger animation on mount
@@ -14,11 +15,15 @@ const MacWindow = ({ app, onClose }) => {
         setTimeout(onClose, 300);
     };
 
+    const toggleMaximize = () => {
+        setIsMaximized(!isMaximized);
+    };
+
     const AppComponent = app.component;
 
     return (
         <div className={`window-overlay ${isVisible ? 'visible' : ''}`}>
-            <div className={`mac-window glass ${isVisible ? 'visible' : ''}`}>
+            <div className={`mac-window glass ${isVisible ? 'visible' : ''} ${isMaximized ? 'maximized' : ''}`}>
                 <div className="window-titlebar">
                     <div className="window-controls">
                         <button
@@ -27,7 +32,11 @@ const MacWindow = ({ app, onClose }) => {
                             aria-label="Close"
                         />
                         <button className="window-control minimize" aria-label="Minimize" />
-                        <button className="window-control maximize" aria-label="Maximize" />
+                        <button
+                            className="window-control maximize"
+                            onClick={toggleMaximize}
+                            aria-label="Maximize"
+                        />
                     </div>
                     <div className="window-title">{app.name}</div>
                     <div className="window-controls-spacer" />
