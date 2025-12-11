@@ -39,7 +39,7 @@ const FolderApp = ({ name, icon, folder, isAdmin, onAddFile, onDeleteFolder, ini
             try {
                 const response = await uploadFile(file);
                 // add a link from environment variable
-                const fullUrl = `${process.env.REACT_APP_API_URL}${response.url}`;
+                const fullUrl = `${import.meta.env.VITE_API_URL}${response.url}`;
                 setNewFile(prev => ({ ...prev, poster: fullUrl }));
             } catch (error) {
                 console.error('Upload failed:', error);
