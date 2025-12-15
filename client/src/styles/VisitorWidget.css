@@ -1,0 +1,186 @@
+.visitor-widget-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.widget-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.widget-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+}
+
+/* Visitor Card */
+.visitor-card {
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+}
+
+.icon-container {
+    background: rgba(0, 122, 255, 0.1);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.widget-icon {
+    font-size: 2rem;
+}
+
+.count-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1d1d1f;
+    margin: 0.5rem 0;
+}
+
+/* GitHub Card */
+.github-card {
+    background: linear-gradient(135deg, rgba(36, 41, 46, 0.9) 0%, rgba(36, 41, 46, 0.7) 100%);
+    color: white;
+}
+
+.github-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.github-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.github-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.github-stats {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 0.3rem;
+}
+
+.github-link {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.github-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Repos Card */
+.repos-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #1d1d1f;
+}
+
+.repos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.repo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.repo-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.repo-name {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.repo-stars {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Dark Mode Support (if applicable) */
+@media (prefers-color-scheme: dark) {
+    .widget-card {
+        background: rgba(30, 30, 30, 0.6);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .visitor-card {
+        background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(40, 40, 40, 0.4) 100%);
+    }
+
+    .count-number {
+        color: white;
+    }
+
+    .repos-card h3 {
+        color: white;
+    }
+
+    .repo-item {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .repo-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .repo-stars {
+        color: #aaa;
+    }
+}
+
+.visitor-widget-loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}

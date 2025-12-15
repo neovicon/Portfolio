@@ -40,6 +40,7 @@ import SkillsApp from './components/apps/SkillsApp';
 import ContactApp from './components/apps/ContactApp';
 import AdminPlusApp from './components/apps/AdminPlusApp';
 import FolderApp from './components/apps/FolderApp';
+import VisitorWidget from './components/VisitorWidget';
 import './styles/index.css';
 
 function DesktopView() {
@@ -234,6 +235,9 @@ function DesktopView() {
         <>
           <MenuBar isDark={isDark} toggleTheme={toggleTheme} />
           <DesktopIcons apps={desktopIconApps} onAppClick={handleOpenApp} />
+          <div style={{ position: 'absolute', top: '60px', right: '20px', width: '300px', zIndex: 0 }}>
+            <VisitorWidget />
+          </div>
           <Dock apps={defaultApps} onAppClick={handleOpenApp} />
           {currentAppObj && (
             <MacWindow

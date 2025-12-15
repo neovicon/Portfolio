@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AppIcon from '../ui/AppIcon';
+import VisitorWidget from '../VisitorWidget';
 import '../../styles/iOSGrid.css';
 
 const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
@@ -68,7 +69,7 @@ const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
                             type={app.id}
                             label={app.name}
                             onClick={() => onAppClick(app.id)}
-                            icon={app.icon}
+                        // Don't pass icon prop for default apps so it uses the SVG icons
                         />
                     ))}
                     <AppIcon
@@ -76,6 +77,9 @@ const iOSGrid = ({ apps, onAppClick, isDark, toggleTheme }) => {
                         label="Theme"
                         onClick={toggleTheme}
                     />
+                    <div style={{ gridColumn: '1 / -1', marginTop: '20px' }}>
+                        <VisitorWidget />
+                    </div>
                 </div>
 
                 {/* Page 1 (if there are custom apps) */}

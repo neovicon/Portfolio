@@ -9,6 +9,8 @@ import wallpaperRoutes from './routes/wallpaperRoutes.js';
 import skillsRoutes from './routes/skillsRoutes.js';
 import folderRoutes from './routes/folderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import visitorRoutes from './routes/visitorRoutes.js';
+import githubRoutes from './routes/githubRoutes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -41,6 +43,8 @@ app.use('/api/wallpaper', wallpaperRoutes);
 app.use('/api/skills', skillsRoutes);
 app.use('/api/folders', folderRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api', visitorRoutes); // Exposes /api/visits
+app.use('/api/github', githubRoutes); // Exposes /api/github/profile and /api/github/repos
 
 // Health check route
 app.get('/api/health', (req, res) => {

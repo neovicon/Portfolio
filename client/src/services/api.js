@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL
-    ? `${import.meta.env.VITE_API_URL}/api`
-    : 'http://localhost:5000/api';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '') + '/api';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -10,6 +8,22 @@ const api = axios.create({
         'Content-Type': 'application/json',
     },
 });
+
+// Visitor & GitHub API calls
+export const getVisitorCount = async () => {
+    const response = await api.get('/visits');
+    return response.data;
+};
+
+export const getGithubProfile = async () => {
+    const response = await api.get('/github/profile');
+    return response.data;
+};
+
+export const getGithubRepos = async () => {
+    const response = await api.get('/github/repos');
+    return response.data;
+};
 
 // Project API calls
 export const getProjects = async () => {
@@ -40,6 +54,11 @@ export const deleteProject = async (id) => {
 // Contact API calls
 export const submitContact = async (contactData) => {
     const response = await api.post('/contact', contactData);
+    return response.data;
+};
+
+export const getContacts = async () => {
+    const response = await api.get('/contact');
     return response.data;
 };
 
