@@ -18,39 +18,7 @@ jobs:
       # 1️⃣ Checkout the repo
       - uses: actions/checkout@v4
 
-      # 2️⃣ Set Node.js version to LTS
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      # 3️⃣ Install dependencies in /server
-      - name: Install dependencies
-        working-directory: server
-        run: npm install
-
-      # 4️⃣ Build step (if your project has a build command)
-      - name: Build project
-        working-directory: server
-        run: npm run build --if-present
-
-      # 5️⃣ Verify node_modules (debug, optional)
-      - name: Verify node_modules
-        run: ls server/node_modules | head
-
-      # 6️⃣ Prepare deployment folder
-      - name: Prepare deployment package
-        run: |
-          mkdir deploy
-          cp -r server/server.js server/package.json server/package-lock.json server/node_modules deploy/
-
-      # 7️⃣ Zip deployment package
-      - name: Zip app
-        run: |
-          cd deploy
-          zip -r ../app.zip .
-
-      # 8️⃣ Login to Azure
+      # 2️⃣ Login to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -58,10 +26,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_750D826973BA4CD192AF039CB097096E }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0AA43D139A38453DB81985E63EE1B58A }}
 
-      # 9️⃣ Deploy to Azure Web App
-      - name: Deploy to Azure Web App
+      # 3️⃣ Deploy the server folder directly (let Azure install dependencies)
+      - name: Deploy Node.js app to Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: daniellepcha
           slot-name: Production
-          package: app.zip
+          package: ./server
