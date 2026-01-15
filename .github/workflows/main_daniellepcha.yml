@@ -15,10 +15,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout source
       - uses: actions/checkout@v4
 
-      # Azure login via OIDC
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Go into /server
+      - name: Install dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Build (if any)
+        working-directory: server
+        run: npm run build --if-present
+
+      # Create deployment folder
+      - name: Prepare deployment package
+        run: |
+          mkdir deploy
+          cp -r server/server.js server/package.json server/package-lock.json server/node_modules deploy/
+
+      - name: Zip app
+        run: |
+          cd deploy
+          zip -r ../app.zip .
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -26,10 +49,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_750D826973BA4CD192AF039CB097096E }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0AA43D139A38453DB81985E63EE1B58A }}
 
-      # Deploy entire repo so Oryx can build /server
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: daniellepcha
           slot-name: Production
-          package: .
+          package: app.zip
