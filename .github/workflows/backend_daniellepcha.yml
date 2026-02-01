@@ -9,17 +9,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
 
     steps:
-      # 1️⃣ Checkout repository
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2️⃣ Login to Azure
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -27,7 +24,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F6422F5E20D047F2B4825014904CA0E2 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_77228C5145F249AD9B7DFA36B163DF55 }}
 
-      # 3️⃣ Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
