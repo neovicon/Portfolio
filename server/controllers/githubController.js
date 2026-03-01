@@ -40,9 +40,22 @@ export const getProfile = async (req, res) => {
             return res.status(500).json({ error: 'GitHub username not configured' });
         }
 
-        const response = await axios.get(`${GITHUB_API_BASE}/users/${username}`, {
-            headers: getHeaders()
-        });
+        let response;
+        try {
+            response = await axios.get(`${GITHUB_API_BASE}/users/${username}`, {
+                headers: getHeaders()
+            });
+        } catch (error) {
+            // If token is invalid, try without it
+            if (error.response && error.response.status === 401 && process.env.GITHUB_TOKEN) {
+                console.warn('GitHub token invalid, falling back to unauthenticated request');
+                response = await axios.get(`${GITHUB_API_BASE}/users/${username}`, {
+                    headers: { 'Accept': 'application/vnd.github.v3+json' }
+                });
+            } else {
+                throw error;
+            }
+        }
 
         const { login, followers, public_repos, avatar_url, html_url } = response.data;
 
@@ -61,8 +74,12 @@ export const getProfile = async (req, res) => {
 
         res.json(profileData);
     } catch (error) {
-        console.error('Error fetching GitHub profile:', error.message);
-        res.status(500).json({ error: 'Failed to fetch GitHub profile' });
+        console.error('Error fetching GitHub profile:', error.response?.data || error.message);
+        const status = error.response?.status || 500;
+        res.status(status).json({
+            error: 'Failed to fetch GitHub profile',
+            details: error.response?.data?.message || error.message
+        });
     }
 };
 
@@ -78,17 +95,34 @@ export const getRepos = async (req, res) => {
             return res.status(500).json({ error: 'GitHub username not configured' });
         }
 
-        const response = await axios.get(`${GITHUB_API_BASE}/users/${username}/repos`, {
-            headers: getHeaders(),
-            params: {
-                sort: 'updated', // Fetch recently updated first, we will sort by stars manually or trust API
-                per_page: 100
+        let response;
+        try {
+            response = await axios.get(`${GITHUB_API_BASE}/users/${username}/repos`, {
+                headers: getHeaders(),
+                params: {
+                    sort: 'updated',
+                    per_page: 100
+                }
+            });
+        } catch (error) {
+            // If token is invalid, try without it
+            if (error.response && error.response.status === 401 && process.env.GITHUB_TOKEN) {
+                console.warn('GitHub token invalid, falling back to unauthenticated request');
+                response = await axios.get(`${GITHUB_API_BASE}/users/${username}/repos`, {
+                    headers: { 'Accept': 'application/vnd.github.v3+json' },
+                    params: {
+                        sort: 'updated',
+                        per_page: 100
+                    }
+                });
+            } else {
+                throw error;
             }
-        });
+        }
 
         // Filter and map
         const repos = response.data
-            .filter(repo => !repo.fork) // Optional: filter out forks if desired, but requirement says "Fetch public repositories"
+            .filter(repo => !repo.fork)
             .map(repo => ({
                 name: repo.name,
                 description: repo.description,
@@ -97,7 +131,7 @@ export const getRepos = async (req, res) => {
                 language: repo.language,
                 repoUrl: repo.html_url
             }))
-            .sort((a, b) => b.stars - a.stars); // Sort by stars descending
+            .sort((a, b) => b.stars - a.stars);
 
         cache.repos = {
             data: repos,
@@ -106,7 +140,11 @@ export const getRepos = async (req, res) => {
 
         res.json(repos);
     } catch (error) {
-        console.error('Error fetching GitHub repos:', error.message);
-        res.status(500).json({ error: 'Failed to fetch GitHub repositories' });
+        console.error('Error fetching GitHub repos:', error.response?.data || error.message);
+        const status = error.response?.status || 500;
+        res.status(status).json({
+            error: 'Failed to fetch GitHub repositories',
+            details: error.response?.data?.message || error.message
+        });
     }
 };

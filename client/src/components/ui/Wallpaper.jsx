@@ -33,7 +33,7 @@ const Wallpaper = ({ wallpaper = 'gradient-1' }) => {
         <div
             className="wallpaper"
             style={{
-                background: getWallpaperUrl(),
+                backgroundImage: getWallpaperUrl(),
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
