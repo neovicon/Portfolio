@@ -7,6 +7,9 @@ import contactRoutes from './routes/contactRoutes.js';
 import aboutRoutes from './routes/aboutRoutes.js';
 import wallpaperRoutes from './routes/wallpaperRoutes.js';
 import skillsRoutes from './routes/skillsRoutes.js';
+import githubRoutes from './routes/githubRoutes.js';
+import folderRoutes from './routes/folderRoutes.js';
+import visitRoutes from './routes/visitRoutes.js';
 
 dotenv.config();
 
@@ -29,6 +32,9 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/wallpaper', wallpaperRoutes);
 app.use('/api/skills', skillsRoutes);
+app.use('/api/github', githubRoutes);
+app.use('/api/folders', folderRoutes);
+app.use('/api/visits', visitRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
